@@ -7,9 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Data
-public class HostInfo {
+public class HostInfo extends ProviderResource{
 
-    private String id;
     private InetAddress localIp;
     private String macAddress;
     private int gRPCServerPort;
@@ -21,7 +20,7 @@ public class HostInfo {
 
     public HostInfo(String hostId, String hostName, byte[] ipAddress, String macAddress) {
 
-        this.id = hostId;
+        super(hostId);
 
         try{
             this.localIp = InetAddress.getByAddress(hostName, ipAddress);
