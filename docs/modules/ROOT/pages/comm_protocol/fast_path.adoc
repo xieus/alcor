@@ -2,6 +2,7 @@
 Liguang Xie <lxie@futurewei.com>
 v1.0, 2019-08-15
 :toc: right
+:imagesdir: ../../images
 
 == Introduction
 
