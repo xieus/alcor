@@ -104,7 +104,7 @@
                 </executions>
                 <configuration>
                     <attributes>
-                        <imagesDir>../../images</imagesDir>
+                        <imagesDir>${basedir}/docs/modules/ROOT/images</imagesDir>
                     </attributes>
                 </configuration>
             </plugin>
