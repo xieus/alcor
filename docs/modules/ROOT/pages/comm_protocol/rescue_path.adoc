@@ -1,4 +1,8 @@
 = Control Plane Rescue Path
+Liguang Xie <lxie@futurewei.com>, Eric Li <eli1@futurewei.com>
+v0.1, 2019-11-20
+:toc: right
+:imagesdir: ../../images
 
 Skip local crashed agent and call neighbor agent to pass network configuration
 
