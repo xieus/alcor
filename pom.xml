@@ -103,7 +103,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <imagesDir>../../images</imagesDir>
+                    <attributes>
+                        <imagesDir>../../images</imagesDir>
+                    </attributes>
                 </configuration>
             </plugin>
         </plugins>
