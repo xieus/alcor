@@ -22,7 +22,7 @@ We would want to integrate with Nova to support the same set of user operations,
 == Review of OpenStack Workflow
 
 === VM Creation Workflow
-image::vm_create.png["VM creation workflow", width=1024, link="images/vm_create.png"]
+image::vm_create.png["VM creation workflow", width=1024, link="vm_create.png"]
 
 == Required Changes
 
