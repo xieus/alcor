@@ -103,7 +103,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <imagesDir>docs/modules/ROOT/images</imagesDir>
+                    <imagesDir>../../images</imagesDir>
                 </configuration>
             </plugin>
         </plugins>
