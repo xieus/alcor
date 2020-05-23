@@ -94,6 +94,7 @@
                             <doctype>book</doctype>
                             <attributes>
                                 <snippets>${snippets}</snippets>
+                                <imagesDir>{basedir}/docs/modules/ROOT/images</imagesDir>
                             </attributes>
                             <sourceDirectory>${basedir}/docs</sourceDirectory>
                             <outputDirectory>target/generated-docs</outputDirectory>
