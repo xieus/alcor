@@ -39,12 +39,21 @@ public class CustomerResource extends Resource {
     }
 
     public CustomerResource(CustomerResource state) {
-        this(state.projectId, state.getId(), state.name, state.description);
+        this(state.projectId, state.tenantId, state.getId(), state.name, state.description);
     }
 
     public CustomerResource(String projectId, String id, String name, String description) {
         super(id);
         this.projectId = projectId;
+        this.tenantId = this.projectId;
+        this.name = name;
+        this.description = description;
+    }
+
+    public CustomerResource(String projectId, String tenantId, String id, String name, String description) {
+        super(id);
+        this.projectId = projectId;
+        this.tenantId = tenantId;
         this.name = name;
         this.description = description;
     }
@@ -84,26 +93,28 @@ public class CustomerResource extends Resource {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         CustomerResource that = (CustomerResource) o;
-        return Objects.equals(projectId, that.projectId) &&
+        return Objects.equals(this.projectId, that.projectId) &&
+                Objects.equals(this.tenantId, that.getTenantId()) &&
                 Objects.equals(this.getId(), that.getId()) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(description, that.description);
+                Objects.equals(this.name, that.name) &&
+                Objects.equals(this.description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(projectId, this.getId(), name, description);
+        return Objects.hash(this.projectId, this.tenantId, this.getId(), this.name, this.description);
     }
 
     @Override
     public String toString() {
         return "CustomerResource{" +
-                "projectId='" + projectId + '\'' +
+                "projectId='" + this.projectId + '\'' +
+                "tenantId='" + this.tenantId + '\'' +
                 ", id='" + this.getId() + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                ", name='" + this.name + '\'' +
+                ", description='" + this.description + '\'' +
                 '}';
     }
 }
