@@ -2,7 +2,7 @@
 Liguang Xie <lxie@futurewei.com>
 v0.1, 2020-08-17
 :toc: right
-:imagesdir: ../images
+:imagesdir: ../../images
 
 NOTE: This document is under development
 
