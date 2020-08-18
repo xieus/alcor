@@ -30,7 +30,7 @@ Key design points
 == Communication Model
 
 === gRPC Fast Path
-Refer to xref:comm_protocol/fast_path.adoc[gRPC fast Path]
+Refer to xref:../comm_protocol/fast_path.adoc[gRPC fast Path]
 
 ==== gRPC Cold Start Latency
 
@@ -39,13 +39,13 @@ Refer to xref:comm_protocol/fast_path.adoc[gRPC fast Path]
 ==== gRPC Streaming Model for Bi-Directional Communication
 
 === Message Queue Scaling Path
-Refer to xref:mq_services/message_queue_system.adoc[MQ Scalaing Path]
+Refer to xref:../mq_services/message_queue_system.adoc[MQ Scalaing Path]
 
 === HA Rescue Path
-Refer to xref:comm_protocol/rescue_path.adoc[HA Rescue Path]
+Refer to xref:../comm_protocol/rescue_path.adoc[HA Rescue Path]
 
 == Messaging Model based on Goal State
-Refer to xref:comm_protocol/goal_state_model.adoc[Goal State model]
+Refer to xref:../comm_protocol/goal_state_model.adoc[Goal State model]
 
 [source,java]
 ------------------------------------------------------------
@@ -107,7 +107,7 @@ message PortConfiguration {
 
 == Southbound Programming Workflow
 
-Refer to xref:high_level/southbound_workflow.adoc[Southbound Workflow]
+Refer to xref:../high_level/southbound_workflow.adoc[Southbound Workflow]
 
 == Concurrency and Event Ordering
 
