@@ -1,0 +1,168 @@
+= Southbound Scale-out Design
+Liguang Xie <lxie@futurewei.com>
+v0.1, 2020-08-17
+:toc: right
+:imagesdir: ../images
+
+NOTE: This document is under development
+
+== Southbound Services Partitioning
+
+image::southbound_scaleout.JPG["Southbound Scale-out Design", width=512, link="southbound_scaleout.JPG"]
+
+=== Infrastructure Services Partitioning
+
+Key design points
+
+- Could Infrastructure services are deployed in a group of standalone K8s applications that are decoupled from management services.
+- Partitioned by physical topology of data centers based on needs, e.g., AZ/DC/cluster.
+-
+
+=== Message Queue Partitioning
+
+==== MQ Deployment
+- per region
+- per AZ
+- per DC
+
+==== MQ Topic Grouping
+
+== Communication Model
+
+=== gRPC Fast Path
+Refer to xref:comm_protocol/fast_path.adoc[gRPC fast Path]
+
+==== gRPC Cold Start Latency
+
+==== gRPC Unary Async Model
+
+==== gRPC Streaming Model for Bi-Directional Communication
+
+=== Message Queue Scaling Path
+Refer to xref:mq_services/message_queue_system.adoc[MQ Scalaing Path]
+
+=== HA Rescue Path
+Refer to xref:comm_protocol/rescue_path.adoc[HA Rescue Path]
+
+== Messaging Model based on Goal State
+Refer to xref:comm_protocol/goal_state_model.adoc[Goal State model]
+
+[source,java]
+------------------------------------------------------------
+syntax = "proto3";
+
+package alcor.schema;
+
+option java_package = "com.futurewei.alcor.schema";
+
+import "vpc.proto";
+import "subnet.proto";
+import "port.proto";
+import "neighbor.proto";
+import "securitygroup.proto";
+import "dhcp.proto";
+import "router.proto";
+
+message GoalState {
+    uint32 format_version = 1;
+
+    repeated VpcState vpc_states = 2;
+    repeated SubnetState subnet_states = 3;
+    repeated PortState port_states = 4;
+    repeated NeighborState neighbor_states = 5;
+    repeated SecurityGroupState security_group_states = 6;
+    repeated DHCPState dhcp_states = 7;
+    repeated RouterState router_states = 8;
+}
+------------------------------------------------------------
+
+Port configuration supports both delta and full message type.
+
+[source,java]
+------------------------------------------------------------
+syntax = "proto3";
+
+package alcor.schema;
+
+option java_package = "com.futurewei.alcor.schema";
+option java_outer_classname = "Port";
+
+import "common.proto";
+
+enum MessageType {
+    DELTA = 0; // the default type
+    FULL = 1;
+}
+
+message PortConfiguration {
+    uint32 format_version = 1;
+    uint32 revision_number = 2;
+
+    string request_id = 3;
+    string id = 4;
+    MessageType message_type = 5;
+    ...
+}
+------------------------------------------------------------
+
+== Southbound Programming Workflow
+
+Refer to xref:high_level/southbound_workflow.adoc[Southbound Workflow]
+
+== Concurrency and Event Ordering
+
+Four types of concurrent network resource update:
+
+[width="100%",options="header"]
+|====================
+|Concurrent Event Types|Example|Approach
+
+| Operation on decoupled resources
+| CURD of resources under two different/unpeered VPCs
+| Free to update simultaneously
+
+| Operation on loosely relevant resources
+| Add one port, and delete the other in the same subnet
+a|
+- No conflict on resource management
+- Network conf programming: Network conf versioning + version-awareness at ACA
+
+| Operation on directly coupled resources
+| Delete a VPC and create a subnet for an empty VPC
+a|
+- Timestamp issued by API gateway
+- Check associated resource status
+- DB cleanup for unstaged transactions
+
+| Operation on the same resource
+| Update operation and delete operation on the same port
+a|
+- Customer experience: may have different experience if executed in different order
+- Resource management: no conflict (using DB concurrency + timestamp versioning)
+- Network configuration programming: no conflict
+
+|====================
+
+=== Per-Resource State Machines in Host Agent
+
+. Normal
+. OOO (Out of order)
+. Crashed
+. Recovering
+
+Per resource state management stored in ACA memory
+
+=== Per-Resource Status Update from ACA to DPM
+
+- Consider to use resource batched update and gPRC streaming (for fast path)
+
+=== Delta MessageType for Incremental Updates
+
+=== Full MessageType for State Overwrite
+
+- Port creation
+- Recovered from Crashed status
+
+== Availability Zone Resilience
+
+TBD
