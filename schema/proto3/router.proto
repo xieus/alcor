@@ -30,7 +30,23 @@ message RouterConfiguration {
     string request_id = 3;
     string id = 4;
     string host_dvr_mac_address = 5;
-    repeated string subnet_ids = 6;
+
+    message RoutingRuleState {
+        string owner_id = 1;
+        string id = 2;
+        string name = 3;
+        string destination = 4;
+        string nextHop = 5;
+        uint32 priority = 6;
+    }
+
+    message SubnetRoutingTableState {
+        string subnet_id = 1;
+        repeated RoutingRuleState subnet_routing_rule_states = 2;
+    }
+
+    repeated SubnetRoutingTableState subnet_routing_table_states = 6;
+    repeated RoutingRuleState vpc_routing_rules_states = 7;
 }
 
 message RouterState {
