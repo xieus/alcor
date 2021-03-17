@@ -127,8 +127,6 @@ public class DataPlaneClientImpl implements DataPlaneClient {
 
     private void doSendGoalState(Goalstate.GoalState goalState, String hostIp) {
 
-        Map<String, List<GoalStateOperationStatus>> result = new HashMap<>();
-
         ManagedChannel channel = newChannel(hostIp, grpcPort);
         GoalStateProvisionerGrpc.GoalStateProvisionerBlockingStub blockingStub =
                 GoalStateProvisionerGrpc.newBlockingStub(channel);
@@ -138,7 +136,9 @@ public class DataPlaneClientImpl implements DataPlaneClient {
         List<GoalStateOperationStatus> statuses =
                 reply.getOperationStatusesList();
 
-        result.put(hostIp, statuses);
+
+//        Map<String, List<GoalStateOperationStatus>> result = new HashMap<>();
+//        result.put(hostIp, statuses);
 
         shutdown(channel);
     }

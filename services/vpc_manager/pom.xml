@@ -29,7 +29,7 @@
     <repositories>
         <repository>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
             <id>jcenter-releases</id>
             <name>jcenter</name>
@@ -40,6 +40,11 @@
     <dependencies>
 
         <!--Service Basic dependencies-->
+        <dependency>
+            <groupId>nl.jworks.markdown_to_asciidoc</groupId>
+            <artifactId>markdown_to_asciidoc</artifactId>
+            <version>1.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
